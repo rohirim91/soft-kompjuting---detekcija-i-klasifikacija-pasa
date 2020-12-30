@@ -1,0 +1,1 @@
+# soft-kompjuting---detekcija-i-klasifikacija-pasa
