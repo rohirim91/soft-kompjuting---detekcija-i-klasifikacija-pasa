@@ -1,3 +1,5 @@
+# Projekat iz predmeta Soft kompjuting
+
 Članovi tima:
-  Dragana Grbić, SW22/2017
-  Petar Nikolić, SW31/2017
+1. Dragana Grbić SW22/2017
+4. Petar Nikolić SW31/2017
