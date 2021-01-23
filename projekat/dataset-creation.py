@@ -9,7 +9,7 @@ from imutils import paths
 import cv2
 import os
 
-if __name__ == '__main__':
+def initDataset():
 	# loop over the output positive and negative directories
 	for dirPath in (config.POSITVE_PATH, config.NEGATIVE_PATH):
 		# if the output directory does not exist yet, create it
@@ -150,3 +150,19 @@ if __name__ == '__main__':
 					roi = cv2.resize(roi, config.INPUT_DIMS,
 						interpolation=cv2.INTER_CUBIC)
 					cv2.imwrite(outputPath, roi)
+
+
+if _name_ == '__main__':
+    # Add our data-augmentation parameters to ImageDataGenerator
+    train_datagen = ImageDataGenerator(rescale=1. / 255., rotation_range=30, width_shift_range=0.2,
+                                        height_shift_range=0.2, shear_range=0.15, zoom_range=0.15, horizontal_flip=True)
+    
+    train_generator = train_datagen.flow_from_directory("train", batch_size=20, class_mode=None,
+                                                         target_size=(224, 224), save_to_dir="test", save_prefix='aug-', save_format='jpeg')
+    i = 0
+    # loop over examples from our image data augmentation generator
+    for image in train_generator:
+        i += 1
+        if i > 2800:
+            break
+
