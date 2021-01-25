@@ -1,10 +1,9 @@
-# import the necessary packages
 import numpy as np
-
 
 def non_max_suppression_slow(boxes, probs=None, overlapThresh=0.3):
 	if len(boxes) == 0:
 		return []
+	
 	pick = []
 	x1 = boxes[:, 0]
 	y1 = boxes[:, 1]
@@ -13,7 +12,7 @@ def non_max_suppression_slow(boxes, probs=None, overlapThresh=0.3):
 	area = (x2 - x1 + 1) * (y2 - y1 + 1)
 
 	if probs is not None:
-		idxs = np.argsort(area)
+		idxs = np.argsort(probs)
 	else:
 		idxs = np.argsort(area)
 
