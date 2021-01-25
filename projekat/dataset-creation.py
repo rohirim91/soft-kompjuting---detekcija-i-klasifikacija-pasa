@@ -1,7 +1,3 @@
-# USAGE
-# python build_dataset.py
-
-# import the necessary packages
 from dog_utils.iou import compute_iou
 from dog_utils import config
 from bs4 import BeautifulSoup
