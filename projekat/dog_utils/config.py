@@ -1,4 +1,3 @@
-# import the necessary packages
 import os
 
 # define the base path to the *original* input dataset and then use
