@@ -1,7 +1,6 @@
 import numpy as np
 from keras.preprocessing import image
 from keras_applications import resnet50
-from keras_preprocessing.image import ImageDataGenerator
 from tqdm import tqdm
 from keras.applications.resnet50 import preprocess_input
 from tensorflow.keras.applications import resnet50, ResNet50

@@ -1,9 +1,10 @@
-from dog_utils.iou import compute_iou
-from dog_utils import config
+from utils.iou import compute_iou
+from utils import config
 from bs4 import BeautifulSoup
 from imutils import paths
 import cv2
 import os
+from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 
 def initDataset():
 	# loop over the output positive and negative directories
@@ -148,17 +149,27 @@ def initDataset():
 					cv2.imwrite(outputPath, roi)
 
 
-if _name_ == '__main__':
+def apply_gaussian():
+	for img_name in os.listdir("train/dogs2"):
+		img_path = os.path.join("train/dogs2", img_name)
+		img = cv2.imread(img_path)
+		img = cv2.GaussianBlur(img, (7, 7), 0)
+		cv2.imwrite('test/' + img_name, img)
+
+
+if __name__ == '_main_':
+    # apply_gaussian()
+    # exit(0)
     # Add our data-augmentation parameters to ImageDataGenerator
-    train_datagen = ImageDataGenerator(rescale=1. / 255., rotation_range=30, width_shift_range=0.2,
-                                        height_shift_range=0.2, shear_range=0.15, zoom_range=0.15, horizontal_flip=True)
-    
+    train_datagen = ImageDataGenerator(rotation_range=15, brightness_range=(0.7, 1.4),
+                                       shear_range=0.1, zoom_range=[0.95, 1.25], horizontal_flip=True)
+
     train_generator = train_datagen.flow_from_directory("train", batch_size=20, class_mode=None,
-                                                         target_size=(224, 224), save_to_dir="test", save_prefix='aug-', save_format='jpeg')
+                                                        target_size=(224, 224), save_to_dir="test", save_prefix='aug-',
+                                                        save_format='jpeg')
     i = 0
     # loop over examples from our image data augmentation generator
     for image in train_generator:
         i += 1
         if i > 2800:
             break
-

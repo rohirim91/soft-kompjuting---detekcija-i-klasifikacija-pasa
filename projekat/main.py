@@ -1,8 +1,7 @@
 import os
 
-import joblib
 import numpy as np
-import cv2  # OpenCV
+import cv2
 from tensorflow.keras.models import load_model
 from tensorflow.keras.utils import to_categorical
 from sklearn.model_selection import train_test_split
@@ -11,9 +10,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Flatten
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, BatchNormalization
 
-# from resnet import is_dog
 from tensorflow import keras
-from dog_utils.nms import non_max_suppression_slow
+from utils.nms import non_max_suppression_slow
 
 labele = ["samoyed", "leonberg", "basenji", "rottweiler", "kerry blue"]
 img_w = 0
