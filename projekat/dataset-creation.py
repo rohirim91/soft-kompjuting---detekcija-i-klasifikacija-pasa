@@ -8,7 +8,7 @@ from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 
 def initDataset():
 	# loop over the output positive and negative directories
-	for dirPath in (config.POSITVE_PATH, config.NEGATIVE_PATH):
+	for dirPath in (config.POSITIVE_PATH, config.NEGATIVE_PATH):
 		# if the output directory does not exist yet, create it
 		if not os.path.exists(dirPath):
 			os.makedirs(dirPath)
@@ -31,7 +31,7 @@ def initDataset():
 		# the path to the XML annotation file
 		filename = imagePath.split(os.path.sep)[-1]
 		filename = filename[:filename.rfind(".")]
-		annotPath = os.path.sep.join([config.ORIG_ANNOTS,
+		annotPath = os.path.sep.join([config.ORIG_ANNOTATIONS,
 			"{}.xml".format(filename)])
 
 		# load the annotation file, build the soup, and initialize our
@@ -109,7 +109,7 @@ def initDataset():
 					# the positive instance
 					roi = image[propStartY:propEndY, propStartX:propEndX]
 					filename = "{}.png".format(totalPositive)
-					outputPath = os.path.sep.join([config.POSITVE_PATH,
+					outputPath = os.path.sep.join([config.POSITIVE_PATH,
 						filename])
 
 					# increment the positive counters
@@ -144,8 +144,8 @@ def initDataset():
 					# resize the ROI to the input dimensions of the CNN
 					# that we'll be fine-tuning, then write the ROI to
 					# disk
-					roi = cv2.resize(roi, config.INPUT_DIMS,
-						interpolation=cv2.INTER_CUBIC)
+					roi = cv2.resize(roi, config.INPUT_DIMENSIONS,
+									 interpolation=cv2.INTER_CUBIC)
 					cv2.imwrite(outputPath, roi)
 
 
@@ -158,18 +158,18 @@ def apply_gaussian():
 
 
 if __name__ == '_main_':
-    # apply_gaussian()
-    # exit(0)
-    # Add our data-augmentation parameters to ImageDataGenerator
-    train_datagen = ImageDataGenerator(rotation_range=15, brightness_range=(0.7, 1.4),
-                                       shear_range=0.1, zoom_range=[0.95, 1.25], horizontal_flip=True)
+	# apply_gaussian()
+	# exit(0)
+	# Add our data-augmentation parameters to ImageDataGenerator
+	train_datagen = ImageDataGenerator(rotation_range=15, brightness_range=(0.7, 1.4),
+									   shear_range=0.1, zoom_range=[0.95, 1.25], horizontal_flip=True)
 
-    train_generator = train_datagen.flow_from_directory("train", batch_size=20, class_mode=None,
-                                                        target_size=(224, 224), save_to_dir="test", save_prefix='aug-',
-                                                        save_format='jpeg')
-    i = 0
-    # loop over examples from our image data augmentation generator
-    for image in train_generator:
-        i += 1
-        if i > 2800:
-            break
+	train_generator = train_datagen.flow_from_directory("train", batch_size=20, class_mode=None,
+														target_size=(224, 224), save_to_dir="test", save_prefix='aug-',
+														save_format='jpeg')
+	i = 0
+	# loop over examples from our image data augmentation generator
+	for image in train_generator:
+		i += 1
+		if i > 2800:
+			break

@@ -8,10 +8,10 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Flatten
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, BatchNormalization
+from tensorflow.keras.layers import Conv2D, MaxPooling2D
 
 from tensorflow import keras
-from utils.nms import non_max_suppression_slow
+from utils.nms import non_max_suppression
 
 labele = ["samoyed", "leonberg", "basenji", "rottweiler", "kerry blue"]
 img_w = 0
@@ -293,7 +293,7 @@ if __name__ == '__main__':
             windows, scores, classes = process_image_sliding(itest)
 
         # odbacimo preklapajuce predloge
-        pick = non_max_suppression_slow(windows, probs=scores, overlapThresh=0.03)
+        pick = non_max_suppression(windows, probs=scores, overlapThresh=0.03)
         windows = windows[pick]
         classes = classes[pick]
         scores = scores[pick]
