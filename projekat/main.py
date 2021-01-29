@@ -16,16 +16,8 @@ neg_imgs = []
 test_imgs = []
 
 
-def load_image(path):
-    return cv2.cvtColor(cv2.imread(path), cv2.COLOR_BGR2GRAY)
-
-
 def load_image_color(path):
     return cv2.imread(path)
-
-
-def load_image_color_rgb(path):
-    return cv2.cvtColor(cv2.imread(path), cv2.COLOR_BGR2RGB)
 
 # transformisemo u oblik pogodan za scikit-learn
 def reshape_data(input_data):
