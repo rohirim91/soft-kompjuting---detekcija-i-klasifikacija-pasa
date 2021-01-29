@@ -1,6 +1,7 @@
 import numpy as np
 
-def non_max_suppression(boxes, probs=None, overlapThresh=0.3):
+
+def non_max_suppression(boxes, probs=None, overlap_thresh=0.3):
 	if len(boxes) == 0:
 		return []
 	
@@ -31,7 +32,7 @@ def non_max_suppression(boxes, probs=None, overlapThresh=0.3):
 			w = max(0, xx2 - xx1 + 1)
 			h = max(0, yy2 - yy1 + 1)
 			overlap = float(w * h) / area[j]
-			if overlap > overlapThresh:
+			if overlap > overlap_thresh:
 				suppress.append(pos)
 		idxs = np.delete(idxs, suppress)
 	return pick

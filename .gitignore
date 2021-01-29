@@ -1,12 +1,6 @@
-/.venv/
 /venv/
-/.projekat/dogs/images/
-/projekat/dogs/images/
-/.projekat/dogs/annotations/
-/projekat/dogs/annotations/
-/.projekat/dogs/train/
-/projekat/dogs/train/
-/.projekat/input/
 /projekat/input/
-/.projekat/output/
 /projekat/output/
+/projekat/dogs/images/
+/projekat/dogs/annotations/
+/projekat/dogs/train/
