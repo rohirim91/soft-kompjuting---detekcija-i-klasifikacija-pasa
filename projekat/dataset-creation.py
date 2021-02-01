@@ -1,9 +1,9 @@
 import os
 import cv2
-from utils import constants
+from projekat.utils import constants
 from bs4 import BeautifulSoup
 from imutils import paths
-from utils.iou import compute_iou
+from projekat.utils import compute_iou
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 
 

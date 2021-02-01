@@ -36,4 +36,4 @@ def is_dog(img):
     prediction = ResNet50_model.predict(img)
     cnum = np.argmax(prediction)
     prediction = resnet50.decode_predictions(prediction, top=1)[0][0]
-    return [(cnum <= 268) & (cnum >= 151), prediction[2]]
+    return prediction[2], (cnum <= 268) & (cnum >= 151)

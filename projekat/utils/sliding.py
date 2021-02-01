@@ -1,9 +1,11 @@
 import cv2
 import numpy as np
-from utils import constants, util
+
+from projekat import resnet
+from projekat.utils import constants, util
 
 
-def process_image_sliding(cnn, image, img_h, img_w, min_score=0.9):
+def process_image_sliding(cnn, image, img_h, img_w, min_score=0.9, resnet_enabled=False):
     best_rects = []
     best_scores = []
     best_classes = []
@@ -33,8 +35,13 @@ def process_image_sliding(cnn, image, img_h, img_w, min_score=0.9):
                 roi = image[y:y + size_y, x:x + size_x]
                 if roi.shape[0:2] == (size_y, size_x):
                     roi = cv2.resize(roi, constants.IMG_DIMENSIONS, interpolation=cv2.INTER_CUBIC)
-                    prediction = util.classify_rect(cnn, roi)
-                    if prediction[0] > min_score and prediction[1] != 0:
+
+                    if resnet_enabled:
+                        prediction = resnet.is_dog(roi)
+                    else:
+                        prediction = util.classify_rect(cnn, roi)
+
+                    if prediction[0] > min_score and (prediction[1] != 0 and prediction[1]):
                         best_rects.append([x, y, x + size_x, y + size_y])
                         best_scores.append(prediction[0])
                         best_classes.append(prediction[1])

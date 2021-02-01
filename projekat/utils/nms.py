@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def non_max_suppression(boxes, probs=None, overlap_thresh=0.3):
+def non_max_suppression(boxes, overlap_thresh=0.3):
 	if len(boxes) == 0:
 		return []
 	
@@ -12,10 +12,7 @@ def non_max_suppression(boxes, probs=None, overlap_thresh=0.3):
 	y2 = boxes[:, 3]
 	area = (x2 - x1 + 1) * (y2 - y1 + 1)
 
-	if probs is not None:
-		idxs = np.argsort(probs)
-	else:
-		idxs = np.argsort(area)
+	idxs = np.argsort(area)
 
 	while len(idxs) > 0:
 		last = len(idxs) - 1

@@ -7,9 +7,9 @@ from tensorflow import keras
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
+from tensorflow.python.keras.callbacks import ModelCheckpoint
 
-from utils import constants
-from utils import util
+from projekat.utils import constants, util
 
 
 def create_cnn():
@@ -17,23 +17,27 @@ def create_cnn():
 
     cnn.add(Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(224, 224, 3)))
     cnn.add(MaxPooling2D((2, 2)))
-    cnn.add(Dropout(0.2))
+    cnn.add(Dropout(0.25))
 
     cnn.add(Conv2D(64, kernel_size=(3, 3), activation='relu'))
     cnn.add(MaxPooling2D(pool_size=(2, 2)))
-    cnn.add(Dropout(0.2))
+    cnn.add(Dropout(0.25))
 
     cnn.add(Conv2D(256, kernel_size=(3, 3), activation='relu'))
     cnn.add(MaxPooling2D(pool_size=(2, 2)))
-    cnn.add(Dropout(0.2))
+    cnn.add(Dropout(0.25))
 
     cnn.add(Conv2D(256, kernel_size=(3, 3), activation='relu'))
     cnn.add(MaxPooling2D(pool_size=(2, 2)))
-    cnn.add(Dropout(0.2))
+    cnn.add(Dropout(0.25))
 
     cnn.add(Conv2D(256, kernel_size=(3, 3), activation='relu'))
     cnn.add(MaxPooling2D(pool_size=(2, 2)))
-    cnn.add(Dropout(0.2))
+    cnn.add(Dropout(0.25))
+
+    cnn.add(Conv2D(256, kernel_size=(3, 3), activation='relu'))
+    cnn.add(MaxPooling2D(pool_size=(2, 2)))
+    cnn.add(Dropout(0.25))
 
     cnn.add(Flatten())
 
@@ -43,8 +47,8 @@ def create_cnn():
     cnn.add(Dense(6, activation='softmax'))
 
     cnn.compile(loss=keras.losses.categorical_crossentropy,
-                optimizer=keras.optimizers.Adam(),
-                metrics=['accuracy'])
+                 optimizer=keras.optimizers.Adam(),
+                 metrics=['accuracy'])
     return cnn
 
 
@@ -133,15 +137,7 @@ def train_cnn():
 
     cnn = create_cnn()
 
-    cnn.fit(x_train, y_train, validation_data=(x_valid, y_valid), epochs=9, batch_size=32, verbose=1, shuffle=True)
+    checkpointer = ModelCheckpoint(filepath="cnn_best.hdf5", verbose=1, save_best_only=True)
+
+    cnn.fit(x_train, y_train, validation_data=(x_valid, y_valid), epochs=30, batch_size=32, callbacks=[checkpointer], verbose=1, shuffle=True)
     cnn.save("cnn.hdf5")
-
-    pred_classes = np.argmax(cnn.predict(x_valid), axis=1)
-    test_cases_num = len(x_valid)
-    matches_num = np.sum(y_valid == pred_classes)
-    success = float(matches_num) / test_cases_num
-    success_percentage = success * 100
-
-    print("Number of test cases: %d" % test_cases_num)
-    print("Number of matches: %d" % matches_num)
-    print("Success: %f%%" % success_percentage)
