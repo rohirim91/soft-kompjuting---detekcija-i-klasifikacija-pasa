@@ -15,7 +15,6 @@ if __name__ == '__main__':
     for mode in ['fast', 'quality', 'window']:
         start = time.time()
         for img_name in os.listdir("dogs/test"):
-            print('a')
             img_path = os.path.join("dogs/test/", img_name)
             test_image = util.load_image(img_path)
             (img_h, img_w) = test_image.shape[:2]

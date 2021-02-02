@@ -3,7 +3,7 @@ import cv2
 from projekat.utils import constants
 from bs4 import BeautifulSoup
 from imutils import paths
-from projekat.utils import compute_iou
+from projekat.utils.iou import compute_iou
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 
 
@@ -111,3 +111,7 @@ def apply_augmentation():
 
     for img in train_generator:
         pass
+
+
+if __name__ == '__main__':
+    asd()
