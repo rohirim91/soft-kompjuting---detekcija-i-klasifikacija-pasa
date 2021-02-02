@@ -111,7 +111,3 @@ def apply_augmentation():
 
     for img in train_generator:
         pass
-
-
-if __name__ == '__main__':
-    asd()
